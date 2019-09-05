@@ -1,0 +1,17 @@
+.Chat {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+    height: 300px;
+    width: 500px;
+    margin-bottom: 10px;
+}
+
+textarea {
+    background: #fff;
+    width: 496px;
+    height: 50px;
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+    border-radius: 4px;
+    resize: none;
+}
