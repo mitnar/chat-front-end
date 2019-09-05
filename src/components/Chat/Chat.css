@@ -15,3 +15,14 @@ textarea {
     border-radius: 4px;
     resize: none;
 }
+
+.ChatsContent {
+    display: flex;
+    flex-wrap: wrap;
+    width: 600px;
+}
+
+.ChatsContent > div {
+    flex-grow: 1
+}
+
