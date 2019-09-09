@@ -16,17 +16,22 @@ class Chat extends Component {
             messages: [], // messages in current room
             users: [] // users in current room
         };
-        this.chatRoomId = 1; // default room to join after enter to chat
-        this.chatRooms = [{name: "Чат 1", id: 1}, {name: "Чат 2", id: 2}, {name: "Чат 3", id: 3}];
+
+        this.chatRoomId = +window.location.search.split('=')[1] || 1; // room after enter to chat
+
+        this.chatRooms = [{name: "Чат 1", id: 1},
+            {name: "Чат 2", id: 2},
+            {name: "Чат 3", id: 3}]; // exists chat rooms
+
         this.socket = socketIOClient(`http://localhost`);
+
+        this.changeUrl(this.chatRoomId);
     }
 
     componentDidMount() {
 
         this.socket.on("message", this.setMessage); // set new message to chat
-
         this.socket.on("userJoin", this.setUser); // user has joined to the room
-
         this.socket.on('userLeave', this.getRoomUsers); // update users in room after user leave room
 
         this.socket.on('setMessages', messages => { // new message in room
@@ -86,6 +91,9 @@ class Chat extends Component {
     };
 
     joinToRoom = () => {
+        if(this.chatRoomId < 1 || this.chatRoomId > 3)
+            alert('Invalid chat number');
+
         this.socket.emit('join', {chatRoomId: this.chatRoomId, user: this.props.userName});
         this.getRoomMessages();
         this.getRoomUsers();
@@ -105,8 +113,16 @@ class Chat extends Component {
         this.socket.emit('getUsers', this.chatRoomId);
     };
 
+    changeUrl(chatRoomId) {
+        window.history.replaceState(null, '',
+            `${document.location.origin + 
+            document.location.pathname}?chatRoomId=${chatRoomId}`);
+    };
+
     changeRoom = (chatRoomId) => {
         this.chatRoomId = chatRoomId;
+
+        this.changeUrl(this.chatRoomId);
         this.getRoomMessages();
         this.getRoomUsers();
     };

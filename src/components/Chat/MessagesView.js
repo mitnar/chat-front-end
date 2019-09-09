@@ -17,7 +17,7 @@ function MessagesView({
             <div className="Chat">
                 {messages}
             </div>
-            <textarea onKeyPress={sendMessage}/>
+            <textarea onKeyPress={sendMessage} placeholder="Введите сообщение и нажмите enter"/>
         </div>
     )
 }
